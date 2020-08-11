@@ -32,10 +32,42 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {});
   }
 
+  String _searchText = "";
+
+  List names = new List(); //names we get from the STarWars API
+
+  List filteredNames = new List(); // Names filteed by search text
+
+  Icon _searchIcon = new Icon(Icons.search);
+
+  Widget _appBarTitle = new Text('Search Example');
+
+  void _searchPressed() {
+    setState(() {
+      if (this._searchIcon.icon == Icons.search) {
+        this._searchIcon = new Icon(Icons.close);
+        this._appBarTitle = new TextField(
+          // controller: _filter,
+          decoration: new InputDecoration(
+              prefixIcon: new Icon(Icons.search), hintText: 'Search......'),
+        );
+      } else {
+        this._searchIcon = new Icon(Icons.search);
+        this._appBarTitle = new Text('Search Example');
+        filteredNames = names;
+        // _filter.clear();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.search),
+          onPressed: _searchPressed,
+        ),
         title: Text("Cartera de clientes"),
         actions: <Widget>[
           RaisedButton(
